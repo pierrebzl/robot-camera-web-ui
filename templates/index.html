@@ -10,21 +10,61 @@
 		<title>ROBOT</title>
 		<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
 		<link href="{{ url_for('static', filename='bootstrap-theme.min.css') }}" rel="stylesheet">
-		<link href="{{ url_for('static', filename='theme.css') }}" rel="stylesheet">
 		<script type="text/javascript" src="{{ url_for('static', filename='jquery-3.1.1.min.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='ajax.js') }}"></script>
 		<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+
+        <style type="text/css">
+            body {
+                padding: 2em;
+                background-color: #313f46;
+            }
+            .row {
+                text-align: center;
+                padding-bottom: inherit;
+            }
+        </style>
 	</head>
 	<body>
-	    <nav class="navbar navbar-inverse navbar-fixed-top">
-	      <div class="container">
-	        <div class="navbar-header">
-	          <a class="navbar-brand" href="#">ROBOT</a>
-	        </div>
-	      </div>
-	    </nav>
-	    <button type="submit" class="btn btn-danger" href="/Avancer" id="Avancer" name="Avancer">Avancer</button>
-	    <img src="{{ url_for('video_feed') }}">
-	    <button type="submit" class="btn btn-danger" href="/Reculer" id="Reculer" name="Reculer">Reculer</button>
-	</body>
+        <div class="row">
+            <div class="col-sm-10">
+                <img class="img-responsive" src="http://www.hdwallpapersfreepics.com/wp-content/uploads/2016/05/stunning-full-hd.jpeg">
+            </div>
+            <div class="col-sm-2">
+                <div class="panel-group">
+                  <div class="panel panel-warning">
+                    <div class="panel-heading">Control</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <button type="submit" class="btn btn-primary" href="/Avancer" id="Avancer" name="Avancer">Avancer</button>
+                        </div>
+                        <div class="row">
+                            <button type="submit" class="btn btn-danger"
+                                href="/Reculer" id="Reculer"
+                                    name="Reculer">Arret</button>
+                        </div>
+                        <div class="row">
+                            <button type="submit" class="btn btn-primary" href="/Reculer" id="Reculer" name="Reculer">Reculer</button>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">Photo</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <button type="submit" class="btn btn-danger"
+                                        href="/Reculer" id="Reculer"
+                                        name="Reculer">Enregistrer</button>
+                            </div>
+                            <div class="row">
+                                <button type="submit" class="btn btn-danger"
+                                        href="/Reculer" id="Reculer"
+                                        name="Reculer">Photo</button>
+                            </div>
+                        </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
