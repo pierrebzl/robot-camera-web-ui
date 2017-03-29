@@ -28,23 +28,24 @@
 	<body>
         <div class="row">
             <div class="col-sm-10">
-                <img class="img-responsive" src="http://www.hdwallpapersfreepics.com/wp-content/uploads/2016/05/stunning-full-hd.jpeg">
+                <img class="img-responsive" src="{{ url_for('video_feed') }}">
             </div>
             <div class="col-sm-2">
                 <div class="panel-group">
-                  <div class="panel panel-warning">
-                    <div class="panel-heading">Control</div>
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">Robot</div>
                     <div class="panel-body">
                         <div class="row">
-                            <button type="submit" class="btn btn-primary" href="/Avancer" id="Avancer" name="Avancer">Avancer</button>
+                            <button class="btn btn-primary"
+                                    id="forward">Avancer</button>
                         </div>
                         <div class="row">
-                            <button type="submit" class="btn btn-danger"
-                                href="/Reculer" id="Reculer"
-                                    name="Reculer">Arret</button>
-                        </div>
+                            <button class="btn btn-danger"
+                                    id="stop">Arret</button>
+                            </div>
                         <div class="row">
-                            <button type="submit" class="btn btn-primary" href="/Reculer" id="Reculer" name="Reculer">Reculer</button>
+                            <button class="btn btn-primary"
+                                    id="backward">Reculer</button>
                         </div>
                     </div>
                   </div>
@@ -52,14 +53,12 @@
                     <div class="panel-heading">Photo</div>
                         <div class="panel-body">
                             <div class="row">
-                                <button type="submit" class="btn btn-danger"
-                                        href="/Reculer" id="Reculer"
-                                        name="Reculer">Enregistrer</button>
+                                <button class="btn btn-danger"
+                                        id="recordVid">Enregistrer</button>
                             </div>
                             <div class="row">
-                                <button type="submit" class="btn btn-danger"
-                                        href="/Reculer" id="Reculer"
-                                        name="Reculer">Photo</button>
+                                <button class="btn btn-danger"
+                                        id="takePic">Photo</button>
                             </div>
                         </div>
                   </div>

@@ -1,10 +1,46 @@
 $(document).ready(function() {
   $.ajaxSetup({ cache: false,
                 async: true });
+
+  $('button#forward').bind('click', function() {
+	console.log("click");
+    $.ajax({
+      url: '/forward'
+    });
+  });
+
+  $('button#stop').bind('click', function() {
+	console.log("click");
+    $.ajax({
+      url: '/stop'
+    });
+  });
+
+  $('button#backward').bind('click', function() {
+	console.log("click");
+    $.ajax({
+      url: '/backward'
+    });
+  });
+
+  $('button#takePic').bind('click', function() {
+	console.log("click");
+    $.ajax({
+      url: '/take_pic'
+    });
+  });
+
+  $('button#recordVid').bind('click', function() {
+	console.log("click");
+    $.ajax({
+      url: '/record_vid'
+    });
+  });
+
 });
 
 
-$(function() {
+/*$(function() {
 	$('button#Avancer').bind('click', function() {
 		$.getJSON($SCRIPT_ROOT + '/Avancer', function(data, item){
 	         $( "#result" ).text(data.result);
@@ -20,4 +56,7 @@ $(function() {
 	      });
 	    return false;
 	});
-});
+});*/
+
+
+

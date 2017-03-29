@@ -92,3 +92,5 @@ ENV/
 .ropeproject
 
 .idea/
+robot_old.py
+sftp-config.json
