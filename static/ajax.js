@@ -26,7 +26,13 @@ $(document).ready(function() {
   $('button#takePic').bind('click', function() {
 	console.log("click");
     $.ajax({
-      url: '/take_pic'
+      url: '/take_pic',
+      success: function(response) {
+          document.getElementById("previewPic").src = response;
+      },
+      error: function(error) {
+          console.log(error);
+      }
     });
   });
 
@@ -57,6 +63,3 @@ $(function() {
 	    return false;
 	});
 });*/
-
-
-

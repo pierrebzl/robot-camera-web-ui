@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from multiprocessing import Process, Queue
-
+from importlib import import_module
+from robot import Robot
+import sys
 import server
 
 
@@ -8,7 +10,13 @@ def start_flask_app(app):
     app.run(debug=True, threaded=True, port=8080, host='0.0.0.0')
 
 
+def start_robot_master(q):
+    robot = Robot(q)
+    robot.run()
+
 if __name__ == '__main__':
+    env = sys.argv[1] if len(sys.argv) == 2 else 'default'
+    config = import_module('conf.%s' % env).config
 
     q = Queue()
     flask_app = server.setup(q)
@@ -16,7 +24,6 @@ if __name__ == '__main__':
     p_flask = Process(target=start_flask_app, args=(flask_app,))
     p_flask.start()
 
-    #print('Starting GPIO master')
-    #p_gpio = Process(target=start_gpio_master, args=(q,))
-    #p_gpio.start()
-    #p_gpio.join()
+    p_robot = Process(target=start_robot_master, args=(q,))
+    p_robot.start()
+    p_robot.join()

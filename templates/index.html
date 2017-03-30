@@ -13,16 +13,24 @@
 		<script type="text/javascript" src="{{ url_for('static', filename='jquery-3.1.1.min.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='ajax.js') }}"></script>
 		<script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
-
         <style type="text/css">
             body {
-                padding: 2em;
-                background-color: #313f46;
+                padding: 1.5em;
+                background-color: #232323;
             }
             .row {
                 text-align: center;
                 padding-bottom: inherit;
             }
+						.panel-group .panel {
+						    margin-bottom: 1.5em;
+						}
+						.panel-body {
+    						background-color: #232323;
+						}
+						.panel {
+								border: 0px;
+						}
         </style>
 	</head>
 	<body>
@@ -33,33 +41,40 @@
             <div class="col-sm-2">
                 <div class="panel-group">
                   <div class="panel panel-primary">
-                    <div class="panel-heading">Robot</div>
+                    <div class="panel-heading">ROBOT</div>
                     <div class="panel-body">
                         <div class="row">
-                            <button class="btn btn-primary"
-                                    id="forward">Avancer</button>
+                            <button class="btn btn-default" id="forward">
+															<span class="glyphicon glyphicon-arrow-up" style="color:black; font-size: 3em;"></span>
+														</button>
                         </div>
                         <div class="row">
-                            <button class="btn btn-danger"
-                                    id="stop">Arret</button>
+                            <button class="btn btn-default" id="stop">
+                            	<span class="glyphicon glyphicon-stop" style="color:red; font-size: 3em;"></span>
+                            </button>
                             </div>
                         <div class="row">
-                            <button class="btn btn-primary"
-                                    id="backward">Reculer</button>
+                            <button class="btn btn-default" id="backward">
+                            	<span class="glyphicon glyphicon-arrow-down" style="color:black; font-size: 3em;"></span>
+                            </button>
                         </div>
                     </div>
                   </div>
                   <div class="panel panel-primary">
-                    <div class="panel-heading">Photo</div>
+                    <div class="panel-heading">CAMERA</div>
                         <div class="panel-body">
-                            <div class="row">
+                            <!--<div class="row">
                                 <button class="btn btn-danger"
                                         id="recordVid">Enregistrer</button>
-                            </div>
+                            </div>-->
                             <div class="row">
-                                <button class="btn btn-danger"
-                                        id="takePic">Photo</button>
+                                <button class="btn btn-default" id="takePic">
+																	<span class="glyphicon glyphicon-camera" style="color:black; font-size: 3em;"></span>
+																</button>
                             </div>
+														<div class="row">
+															<img class="img-responsive" id="previewPic" src="" download="test.jpg">
+														</div>
                         </div>
                   </div>
                 </div>

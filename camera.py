@@ -2,6 +2,11 @@ import time
 import io
 import threading
 import picamera
+import sys
+from importlib import import_module
+
+env = sys.argv[1] if len(sys.argv) == 2 else 'default'
+config = import_module('conf.%s' % env).config
 
 
 class Camera(object):
@@ -28,6 +33,7 @@ class Camera(object):
     def _thread(cls):
         with picamera.PiCamera() as camera:
             # camera setup
+            camera.annotate_text = config['CAMERA_TEXT']
             camera.resolution = (1280, 720)
             camera.hflip = True
             camera.vflip = True

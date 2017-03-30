@@ -1,8 +1,21 @@
-from flask import Flask, render_template, request, jsonify, Response
+from flask import Flask, render_template, request, jsonify, Response, make_response, send_file
 from camera import Camera
-# import robot
+import datetime
+import time
 
-app = Flask(__name__, template_folder='./templates')
+import sys
+from importlib import import_module
+
+env = sys.argv[1] if len(sys.argv) == 2 else 'default'
+config = import_module('conf.%s' % env).config
+
+# Time zone relative to UTC
+TZ = -4 * 3600
+
+app = Flask(__name__,
+            template_folder='templates',
+            static_folder='static',
+            static_url_path='')
 
 
 @app.route('/')
@@ -18,37 +31,42 @@ def video_feed():
 
 @app.route('/forward')
 def forward():
-    print("fw")
-    app.q.put(('forward',))
+    app.q.put(('forward', config['STEP_DELAY']))
     return jsonify({})
 
 
 @app.route('/stop')
 def stop():
-    print("stop")
     app.q.put(('stop',))
     return jsonify({})
 
 
 @app.route('/backward')
 def backward():
-    print("bw")
-    app.q.put(('backward',))
+    app.q.put(('backward', config['STEP_DELAY']))
     return jsonify({})
 
 
 @app.route('/take_pic')
 def take_pic():
-    print("take_pic")
-    app.q.put(('take_pic',))
-    return jsonify({})
+    st = datetime.datetime.fromtimestamp(time.time() + TZ).strftime('%Y-%m-%d %H:%M:%S')
+    pic = take_pic(Camera())
+    _file = app.static_folder + st + ".jpg"
+    with open(_file, "wb") as fh:
+        fh.write(pic)
+        fh.close()
+    return st + ".jpg"
 
 
 @app.route('/record_vid')
 def record_vid():
     print("record_vid")
-    app.q.put(('record_vid',))
+    # app.q.put(('record_vid',))
     return jsonify({})
+
+
+def take_pic(camera):
+    return camera.get_frame()
 
 
 def gen(camera):
@@ -56,6 +74,7 @@ def gen(camera):
         frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
 
 def setup(q):
     app.q = q
