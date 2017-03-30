@@ -1,7 +1,8 @@
 # robot-penetrator
 
-virtualenv --python=/usr/bin/python3.5 venv
+virtualenv --python=/usr/bin/python3 venv
 . venv/bin/activate
-pip freeze > requirements.txt
+pip3 freeze > requirements.txt
+python3 main.py
 
  sudo apt-get install virtualenv
