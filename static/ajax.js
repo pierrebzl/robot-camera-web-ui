@@ -29,6 +29,11 @@ $(document).ready(function() {
       url: '/take_pic',
       success: function(response) {
           document.getElementById("previewPic").src = response;
+          var link = document.createElement('a');
+          link.href = response;
+          link.download = response;
+          document.body.appendChild(link);
+          link.click();
       },
       error: function(error) {
           console.log(error);

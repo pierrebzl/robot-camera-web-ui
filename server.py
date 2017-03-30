@@ -51,7 +51,7 @@ def backward():
 def take_pic():
     st = datetime.datetime.fromtimestamp(time.time() + TZ).strftime('%Y-%m-%d %H:%M:%S')
     pic = take_pic(Camera())
-    _file = app.static_folder + st + ".jpg"
+    _file = app.static_folder + "/" + st + ".jpg"
     with open(_file, "wb") as fh:
         fh.write(pic)
         fh.close()
