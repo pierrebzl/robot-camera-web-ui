@@ -30,6 +30,7 @@ class Robot:
         self.pin_propulsion_ppm = config['PIN_PROP_PPM']
         self.pin_propulsion_sens = config['PIN_PROP_SENS']
 
+        io.setwarnings(False)
         io.setmode(io.BCM)
         io.setup(self.pin_propulsion_ppm, io.OUT)
         io.setup(self.pin_propulsion_sens, io.OUT)
