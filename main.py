@@ -4,7 +4,7 @@ from importlib import import_module
 from robot import Robot
 import sys
 import server
-
+import os, re
 
 def start_flask_app(app):
     app.run(debug=True, threaded=True, port=8080, host='0.0.0.0')
@@ -17,6 +17,8 @@ def start_robot_master(q):
 if __name__ == '__main__':
     env = sys.argv[1] if len(sys.argv) == 2 else 'default'
     config = import_module('conf.%s' % env).config
+
+    os.system("rm -f static/*.jpg")
 
     q = Queue()
     flask_app = server.setup(q)
