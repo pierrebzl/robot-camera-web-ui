@@ -45,4 +45,4 @@ This software provide an interface to control a specific pipe robot.
 
 ## Usage
 
-Connect to raspberyypi.local:8880 from local network
+Connect to raspberypi.local:8080 from local network or to [LOCAL_PI]:8080
