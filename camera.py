@@ -34,7 +34,7 @@ class Camera(object):
         with picamera.PiCamera() as camera:
             # camera setup
             camera.annotate_text = config['CAMERA_TEXT']
-            camera.resolution = (1280, 720)
+            camera.resolution = (config['H_PIC'], config['V_PIC'])
             camera.hflip = True
             camera.vflip = True
 

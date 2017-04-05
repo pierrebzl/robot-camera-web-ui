@@ -3,12 +3,12 @@ import traceback
 from time import sleep
 from multiprocessing import Process
 
-import RPi.GPIO as io
+import RPi.GPIO as GPIO
 import time
 
 import sys
 from importlib import import_module
-
+GPIO.setmode(GPIO.BCM)
 env = sys.argv[1] if len(sys.argv) == 2 else 'default'
 config = import_module('conf.%s' % env).config
 
@@ -30,19 +30,18 @@ class Robot:
         self.pin_propulsion_ppm = config['PIN_PROP_PPM']
         self.pin_propulsion_sens = config['PIN_PROP_SENS']
 
-        io.setwarnings(False)
-        io.setmode(io.BCM)
-        io.setup(self.pin_propulsion_ppm, io.OUT)
-        io.setup(self.pin_propulsion_sens, io.OUT)
+        GPIO.setwarnings(False)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pin_propulsion_ppm, GPIO.OUT)
+        GPIO.setup(self.pin_propulsion_sens, GPIO.OUT)
 
-        self.propulsion = io.PWM(22, 100) # pin, frequence
-        self.propulsion.start(0) # start pwm
+        self.propulsion = GPIO.PWM(22,100) # pin, frequence
         self.propulsion.ChangeDutyCycle(0)
 
         # Setting the PWM pins to false so the motors will not move
         # until the user presses the first key
-        io.output(self.pin_propulsion_ppm, False)
-        io.output(self.pin_propulsion_sens, False)
+        GPIO.output(self.pin_propulsion_ppm, False)
+        GPIO.output(self.pin_propulsion_sens, False)
 
         self.action_resolver = {
             'stop': self.__stop_current_task,
@@ -70,12 +69,15 @@ class Robot:
         if self.worker_process and self.worker_process.is_alive():
             self.worker_process.terminate()
             self.worker_process = None
+            self.propulsion.stop()
+            GPIO.output(self.pin_propulsion_ppm, False)
+
         else:
             self.log.info('Worker process is already stopped. Ignoring task')
+            self.propulsion.stop()
+            GPIO.output(self.pin_propulsion_ppm, False)
             return False
 
-        # Program will cease all GPIO activity before terminating
-        io.cleanup()
         return True
 
     def __send_task_to_worker(self, task):
@@ -117,24 +119,21 @@ class WorkerProcess():
             self.log.error(trace)
 
     def __forward(self):
-        io.setup(self.pin_propulsion_ppm, io.OUT)
-        io.setup(self.pin_propulsion_sens, io.OUT)
-        io.output(self.pin_propulsion_ppm, True)
-        io.output(self.pin_propulsion_sens, False)
-
-        self.ramp_up()
-        time.sleep(self.task[1])
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pin_propulsion_ppm, GPIO.OUT)
+        GPIO.setup(self.pin_propulsion_sens, GPIO.OUT)
+        GPIO.output(self.pin_propulsion_ppm, True)
+        GPIO.output(self.pin_propulsion_sens, False)
 
     def __backward(self):
-        io.setup(self.pin_propulsion_ppm, io.OUT)
-        io.setup(self.pin_propulsion_sens, io.OUT)
-        io.output(self.pin_propulsion_ppm, True)
-        io.output(self.pin_propulsion_sens, True)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pin_propulsion_ppm, GPIO.OUT)
+        GPIO.setup(self.pin_propulsion_sens, GPIO.OUT)
+        GPIO.output(self.pin_propulsion_ppm, True)
+        GPIO.output(self.pin_propulsion_sens, True)
 
         if(self.speed != 0):
             self.ramp_down()
-
-        time.sleep(self.task[1])
 
     def ramp_up(self):
         while self.speed <= config['MAX_DC']:

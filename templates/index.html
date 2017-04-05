@@ -31,6 +31,12 @@
 						.panel {
 								border: 0px;
 						}
+
+						img#logo {
+						    text-align: -webkit-center;
+								height: 2em;
+								display: inline;
+						}
         </style>
 	</head>
 	<body>
@@ -80,5 +86,8 @@
                 </div>
             </div>
         </div>
+				<div class="row">
+					<img class="img-responsive" id="logo" src="{{ url_for('static', filename='logo.png') }}">
+				</div>
     </body>
 </html>
