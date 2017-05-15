@@ -24,7 +24,7 @@ This software provide an interface to control a specific pipe robot.
   * Create a virtualenv: `virtualenv --python=/usr/bin/python3 venv`
   * Activate the virtualenv: `. venv/bin/activate`
   * Install deps `pip install -r requirements.txt`
-  * Start application: `python main.py`
+  * Start application: `python3 main.py`
   * Check logs on the console and with `sudo journalctl -f`
 
 ## Installation: production setup
